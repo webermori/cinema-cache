@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html> 
+<csp:include page="partials/head.csp">
+<body>
+	<div class="container-fluid">
+		<table width="100%" border="0"> 
+			<tr>
+				<td><img src="images/CacheCinemaLogo.gif"></td>
+				<td align="right">
+					<form name="Search" action="SearchResults.csp" target="Main" method="post">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<label class="input-group-text">Pesquisar</label>
+									</div>
+									<select name="CategoryList" size="1" class="form-control">
+										<option value="*" selected>Todas categorias</option>
+										<csp:query
+											name="CatList"
+											classname="Cinema.FilmCategory"
+											queryname="CategoryName">
+										<csp:while condition="CatList.Next()">
+											<option value=#(CatList.Get("ID"))#>
+												#(CatList.Get("CategoryName"))#
+											</option>
+										</csp:while>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<label class="input-group-text">Avaliação do filme</label>
+									</div>
+									<select name="RatingList" size="1" class="form-control">
+										<option value="*" selected="">Todas  avaliações</option>
+										<option>G</option>
+										<option>PG</option>
+										<option>PG-13</option>
+										<option>R</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<input type="submit" name="Submit" value="Pesquisar" class="btn btn-primary btn-block">
+							</div>
+						</div>
+					</form>
+				</td> 
+			</tr>
+		</table>
+		<hr>
+	</div>
+</body></html>

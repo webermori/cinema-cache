@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html><csp:include page="partials/head.csp">
+<body bgcolor="#FFFFFF">
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<csp:include page="Search.csp">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<csp:include page="Order.csp">
+			</div>
+			<div class="col-md-9">
+				<csp:include page="TopPicks.csp">
+			</div>
+		</div>
+	</div>
+</body></html>

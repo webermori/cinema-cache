@@ -1,0 +1,56 @@
+<html><csp:include page="partials/head.csp">
+<body>
+	<h1>Cadastro de horário</h1>
+	
+<head>
+<title>Cache Server Page - Cinema.Show (USER)</title>
+</head>
+<h1 align='center'>Cinema.Show</h1>
+<!-- This function is needed by the search button on the form -->
+<script language='javascript'>
+<!--
+function update(id)
+{
+     #server(..formLoad(id))#;
+     return true;
+}
+
+// -->
+</script>
+
+<!-- set the domain so error messages could be properly localized -->
+<csp:class DOMAIN='%CSPBind'>
+
+<!-- use CSP:OBJECT tag to create a reference to an instance of the class -->
+<csp:object name='objForm' classname='Cinema.Show' OBJID='#(%request.Get("OBJID"))#'>
+
+<!-- use csp:search tag to create a javascript function to invoke a search page --> 
+<csp:search name='form_search' classname='Cinema.Show' where='%Id()' options='popup,nopredicates' onselect='update'>
+
+<form name='form' cspbind='objForm' cspjs='All' onsubmit='return form_validate();'>
+<center>
+<table cellpadding='3'>
+	<tr>
+		<td><b><div align='right'>StartTime:</div></b></td>
+		<td><input type='text' name='StartTime' cspbind='StartTime' size='10'></td>
+	</tr>
+	<tr>
+		<td><font color='#666666'><b><div align='right'>Film Title:</div></b></font></td>
+		<td><input type='text' name='FilmTitle' cspbind='Film.Title' size='80' readonly></td>
+	</tr>
+	<tr>
+		<td><font color='#666666'><b><div align='right'>Theater TheaterName:</div></b></font></td>
+		<td><input type='text' name='TheaterTheaterName' cspbind='Theater.TheaterName' size='80' readonly></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type='button' name='btnClear' value='#(%response.GetText("","%CSPSearch","ClearBtn","clear"))#' onclick='form_new();'>
+	<input type='button' name='btnSave' value='#(%response.GetText("","%CSPSearch","SaveBtn","save"))#' onclick='form_save();'>
+	<input type='button' name='btnSearch' value='#(%response.GetText("","%CSPSearch","SearchBtn","search"))#' onclick='form_search();'></td>
+	</tr>
+</table>
+</center>
+</form>
+
+</body>
+</html>

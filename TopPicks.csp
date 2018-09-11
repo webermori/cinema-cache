@@ -1,0 +1,32 @@
+<html lang="pt-BR"><csp:include page="partials/head.csp">
+<body>
+    <div class="container">
+        <h1>Melhores filmes</h1>
+        <table class="table">
+            <csp:query name="FilmList" classname="Cinema.Film" queryname="TopFilms">
+
+            <csp:while condition="FilmList.Next()">
+                <tr>
+                    <td>
+                        <b>#(FilmList.Get("Title"))#</b> <br>
+                        #(FilmList.Get("Description"))# <br>
+                        <b>Gênero:</b> #(FilmList.Get("CategoryName"))#    
+                        <b>Duração:</b> #(FilmList.Get("Length"))#    
+                        <b>Avaliação:</b> #(FilmList.Get("Rating"))# <br><br>
+
+                    </td>
+                    <td>
+                        <a href='ShowTimeRegister.csp?FilmID=#(FilmList.Get("ID"))#'>
+                            Registrar Horário
+                        </a>
+                    </td>
+                    <td>
+                        <a href='ShowTimes.csp?FilmID=#(FilmList.Get("ID"))#'>
+                            <img src="images/ShowTimes.gif" width="130" height="39" border="0">
+                        </a>
+                    </td>
+                </tr>
+            </csp:while>
+        </table>
+    </div>
+</body></html>

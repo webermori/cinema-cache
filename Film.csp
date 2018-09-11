@@ -1,0 +1,78 @@
+<html><csp:include page="partials/head.csp">
+
+<h1 align='center'>Cinema.Film</h1>
+<!-- This function is needed by the search button on the form -->
+<script language='javascript'>
+<!--
+function update(id)
+{
+     #server(..formLoad(id))#;
+     return true;
+}
+
+// -->
+</script>
+
+
+
+
+<!-- set the domain so error messages could be properly localized -->
+<csp:class DOMAIN='%CSPBind'>
+
+<!-- use CSP:OBJECT tag to create a reference to an instance of the class -->
+<csp:object name='objForm' classname='Cinema.Film' OBJID='#(%request.Get("OBJID"))#'>
+
+<!-- use csp:search tag to create a javascript function to invoke a search page --> 
+<csp:search name='form_search' classname='Cinema.Film' where='Title' options='popup,nopredicates' onselect='update'>
+
+<form name='form' cspbind='objForm' cspjs='All' onsubmit='return form_validate();'>
+<center>
+<table cellpadding='3'>
+	<tr>
+		<td><b><div align='right'>PlayingNow Now</div></b></td>
+		<td><input type='checkbox' name='PlayingNow' cspbind='PlayingNow'></td>
+	</tr>
+	<tr>
+		<td><font color='#666666'><b><div align='right'>Category CategoryName:</div></b></font></td>
+		<td>
+		
+		</td>
+	</tr>
+	<tr>
+		<td><b><div align='right'>Description:</div></b></td>
+		<td><input type='text' name='Description' cspbind='Description' size='80'></td>
+	</tr>
+	<tr>
+		<td><b><div align='right'>Length:</div></b></td>
+		<td><input type='text' name='Length' cspbind='Length' size='10'></td>
+	</tr>
+	<tr>
+		<td><b><div align='right'>Rating:</div></b></td>
+		<td><select name='Rating' cspbind='Rating'>
+		  <option value=''></option>
+		  <option value='G'>G</option>
+		  <option value=' PG'> PG</option>
+		  <option value=' PG-13'> PG-13</option>
+		  <option value=' R'> R</option>
+		</select></td>
+	</tr>
+	<tr>
+		<td><b><div align='right'>*Title:</div></b></td>
+		<td><input type='text' name='Title' cspbind='Title' size='50' csprequired></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type='button' name='btnClear' value='#(%response.GetText("","%CSPSearch","ClearBtn","clear"))#' onclick='form_new();'>
+	<input type='button' name='btnSave' value='#(%response.GetText("","%CSPSearch","SaveBtn","save"))#' onclick='form_save();'>
+	<input type='button' name='btnSearch' value='#(%response.GetText("","%CSPSearch","SearchBtn","search"))#' onclick='form_search();'></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><font color='#000088' size='2'>#(%response.GetText("","%CSPSearch","RequiredNote","(* Denotes required fields)"))#'</font></td>
+	</tr>
+</table>
+</center>
+</form>
+
+</body>
+</html>

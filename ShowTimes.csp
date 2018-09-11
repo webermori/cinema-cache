@@ -1,0 +1,43 @@
+<html><csp:include page="partials/head.csp">
+
+<body>
+	<!-- Define super classes -->
+	<csp:class encoded=1 super="%CSP.Page,Cinema.Utils">
+	
+	<csp:query 
+		name="Times"
+		classname="Cinema.Show"
+		queryname="ShowTimes"
+		P1='#(%request.Data("FilmID",1))#'>
+	
+	<csp:object 
+		name="Film"
+		classname="Cinema.Film"
+		objid='#(%request.Data("FilmID",1))#'>
+
+	<div class="container">
+		<h2>Hoje, apresentação de #(Film.Title)#</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Horário</th>
+					<th>Local</th>
+					<th>Ação</th>	
+				</tr>
+			</thead>
+			<csp:while condition="Times.Next()"> 
+				<tr>
+					<td>#(Times.Get("StartTime"))#</td>
+					<td>#(Times.Get("TheaterName"))#</td>
+					<td align="center">
+						<a href=. onClick="#server(..AddShow(#(Times.GetData(1))#))#;return false;">
+							<img src="images/Tickets.gif" />
+						</a>
+					</td>
+				</tr>
+			</csp:while>
+			
+		</table>
+	</div>
+</body>
+</html>

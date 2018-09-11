@@ -1,0 +1,48 @@
+<html><csp:include page="partials/head.csp">
+
+<body>
+	
+<head>
+<title>Cache Server Page - Cinema.FilmCategory (USER)</title>
+</head>
+<h1 align='center'>Cinema.FilmCategory</h1>
+<!-- This function is needed by the search button on the form -->
+<script language='javascript'>
+<!--
+function update(id)
+{
+     #server(..formLoad(id))#;
+     return true;
+}
+
+// -->
+</script>
+
+<!-- set the domain so error messages could be properly localized -->
+<csp:class DOMAIN='%CSPBind'>
+
+<!-- use CSP:OBJECT tag to create a reference to an instance of the class -->
+<csp:object name='objForm' classname='Cinema.FilmCategory' OBJID='#(%request.Get("OBJID"))#'>
+
+<!-- use csp:search tag to create a javascript function to invoke a search page --> 
+<csp:search name='form_search' classname='Cinema.FilmCategory' where='%Id()' options='popup,nopredicates' onselect='update'>
+
+<form name='form' cspbind='objForm' cspjs='All' onsubmit='return form_validate();'>
+<center>
+<table cellpadding='3'>
+	<tr>
+		<td><b><div align='right'>CategoryName:</div></b></td>
+		<td><input type='text' name='CategoryName' cspbind='CategoryName' size='50'></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type='button' name='btnClear' value='#(%response.GetText("","%CSPSearch","ClearBtn","clear"))#' onclick='form_new();'>
+	<input type='button' name='btnSave' value='#(%response.GetText("","%CSPSearch","SaveBtn","save"))#' onclick='form_save();'>
+	<input type='button' name='btnSearch' value='#(%response.GetText("","%CSPSearch","SearchBtn","search"))#' onclick='form_search();'></td>
+	</tr>
+</table>
+</center>
+</form>
+
+</body>
+</html>
