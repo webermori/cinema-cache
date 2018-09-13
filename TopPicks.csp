@@ -1,10 +1,46 @@
 <html lang="pt-BR"><csp:include page="partials/head.csp">
 <body>
-    <div class="container">
-        <h1>Melhores filmes</h1>
-        <table class="table">
-            <csp:query name="FilmList" classname="Cinema.Film" queryname="TopFilms">
 
+    <script language="Cache" runat="server">                   
+        set CatID = %request.GetCookie("CacheCinemaLastCategory")
+        
+        set CatName = ""
+        if (CatID '=""){
+            set Cat = ##class(Cinema.FilmCategory).%OpenId(CatID)
+           
+            if (Cat '="") {
+                set CatName = Cat.CategoryName               
+            }
+        }        
+        if (CatName '="") {
+            set Query = "TopCategory"
+            set PageTitle = "Melhores filmes de <strong>" _ CatName _"</strong>"
+            set P1 = CatID          
+        } else {
+            set Query = "TopFilms"
+            set PageTitle = "Top Picks - Geral"
+            set P1 = ""
+        }        
+    </script>
+
+    <div class="container">	
+        <h1 style="color:Green">#(PageTitle)#</h1>
+
+        <script language="Cache" runat="server"> 
+        if (P1) {
+            Write "COD:" _ P1 
+        }
+        </script>
+        
+        #(P1)#
+       
+        <table class="table">
+            <csp:query 
+                name="FilmList"
+                classname="Cinema.Film"
+                queryname="#(Query)#" 
+                P1="#(CatID)#">        
+                     
             <csp:while condition="FilmList.Next()">
                 <tr>
                     <td>
@@ -15,11 +51,11 @@
                         <b>Avaliação:</b> #(FilmList.Get("Rating"))# <br><br>
 
                     </td>
-                    <td>
+                   <!--  <td>
                         <a href='ShowTimeRegister.csp?FilmID=#(FilmList.Get("ID"))#'>
                             Registrar Horário
                         </a>
-                    </td>
+                    </td> -->
                     <td>
                         <a href='ShowTimes.csp?FilmID=#(FilmList.Get("ID"))#'>
                             <img src="images/ShowTimes.gif" width="130" height="39" border="0">
