@@ -44,9 +44,14 @@
 								</div>
 							</div>
 
-							<div class="col-md-4">
+							<div class="col-md-2">
 								<input type="submit" name="Submit" value="Pesquisar" class="btn btn-primary btn-block">
 							</div>
+							
+							<div class="col-md-2">
+								<a href="Cinema.RemoveCookie.cls?Action=1" target="Main" class="btn btn-secondary">Limpar Cookie</a>
+							</div>	
+							
 						</div>
 					</form>
 				</td> 

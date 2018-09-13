@@ -28,8 +28,8 @@
 				<td>
 					<h2>#(FilmList.GetDataByName("Title"))#</h2>
 					#(FilmList.GetDataByName("Description"))# <br>
-					<b>GÃªnero:</b> #(FilmList.GetDataByName("CategoryName"))#
-					<b>DuraÃ§Ã£o:</b> #(FilmList.GetDataByName("Length"))#
+					<b>Gênero:</b> #(FilmList.GetDataByName("CategoryName"))#
+					<b>Duração:</b> #(FilmList.GetDataByName("Length"))#
 					<b>Rating</b> #(FilmList.GetDataByName("Rating"))# <br><br>
 				</td>
 

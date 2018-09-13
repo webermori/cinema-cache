@@ -13,9 +13,6 @@ function update(id)
 // -->
 </script>
 
-
-
-
 <!-- set the domain so error messages could be properly localized -->
 <csp:class DOMAIN='%CSPBind'>
 

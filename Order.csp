@@ -1,83 +1,85 @@
 <html><csp:include page="partials/head.csp">
 <body>
-<csp:class super="%CSP.Page, Cinema.Utils">
-<div class="container">
-	<csp:if condition='%session.IsDefined("Order")'>
-		<img src="images/YourTicketOrder.gif"><br>
-
-		<hr>
-		
-		<script language="Cache" runat="server">
-		Set ord = ##class(Cinema.TicketOrder).%OpenId(%session.Data("Order"))
-	 	</script>
-	 	
-	 	<form name="OrderTickets">
-	 		<ul>
+	<csp:class super="%CSP.Page, Cinema.Utils">
+	<div class="container">
+		<csp:if condition='%session.IsDefined("Order")'>
+			<img src="images/YourTicketOrder.gif"><br>
+			<hr>
+			<script language="Cache" runat="server">
+			Set ord = ##class(Cinema.TicketOrder).%OpenId(%session.Data("Order"))
+		 	</script>
+		 	
+		 	<form name="OrderTickets" action="Cinema.TicketConfirm.cls" method="post">
 			 	<csp:loop counter="num" from=1 to=#(ord.Items.Count())#> 
 			 		<script language="Cache" runat="server">Set itm = ord.Items.GetAt(num)</script>
 			 		
-			 		<li style="border-bottom: solid 1px #ddd; margin-bottom: 20px; padding-bottom: 20px;">
-
-			 				<strong>Horário:</strong> #($ZT(itm.Show.StartTime,4))#<br>
+			 		<div class="card">
+		 				<div class="card-body">
+		 					<strong>Horário:</strong> #($ZT(itm.Show.StartTime,4))#<br>
 					 		<strong>Título:</strong> #(itm.Show.Film.Title)#<br>
 					 		<strong>Local:</strong> <i>#(itm.Show.Theater.TheaterName)#</i><br><br>
-				 		<div class="input-group mb-2 mr-sm-2">
-					 		<div class="input-group-prepend">
-						      <div class="input-group-text">Ingresso de adultos</div>
-						    </div>
 
-					 		<select name="AdultTickets"
-					 		OnChange="#server(..ChangeQuantity(#(num)#, 1, this.selectedIndex))#" class="form-control">
-					 			<csp:loop counter="i" from=0 to=9>
-					 				<csp:if condition='itm.AdultTickets = i'>
-										<option selected>
-					 				<csp:else>
-					 					<option>
-					 				</csp:if>
-						 			#(i)#
-						 			</option>
-					 			</csp:loop>
-					 		</select>
-					 	</div>
+						 	<h6>Ingressow:</h6>
+					 		<div class="input-group mb-2 mr-sm-2">
+						 		<div class="input-group-prepend">
+							     	<div class="input-group-text">Adultos</div>
+							    </div>
 
-					 	<div class="input-group mb-2 mr-sm-2">
-					 		<div class="input-group-prepend">
-						      <div class="input-group-text">Ingresso de Crianças</div>
-						    </div>
+						 		<select name="AdultTickets"
+						 		OnChange="#server(..ChangeQuantity(#(num)#, 1, this.selectedIndex))#" class="form-control">
+						 			<csp:loop counter="i" from=0 to=9>
+						 				<csp:if condition='itm.AdultTickets = i'>
+											<option selected>
+						 				<csp:else>
+						 					<option>
+						 				</csp:if>
+							 			#(i)#
+							 			</option>
+						 			</csp:loop>
+						 		</select>
+						 	</div>
 
-					 		<select name="ChildTickets"
-					 		OnChange="#server(..ChangeQuantity(#(num)#, 1, this.selectedIndex))#" class="form-control">
-					 			<csp:loop counter="i" from=0 to=9>
-					 				<csp:if condition='itm.ChildTickets = i'>
-										<option selected>
-					 				<csp:else>
-					 					<option>
-					 				</csp:if>
-						 			#(i)#
-						 			</option>
-					 			</csp:loop>
-					 		</select>
-					 	</div>
-			 		</li>
+						 	<div class="input-group mb-2 mr-sm-2">
+						 		<div class="input-group-prepend">
+							      <div class="input-group-text">Crianças</div>
+							    </div>
+
+						 		<select name="ChildTickets"
+						 		OnChange="#server(..ChangeQuantity(#(num)#, 1, this.selectedIndex))#" class="form-control">
+						 			<csp:loop counter="i" from=0 to=9>
+						 				<csp:if condition='itm.ChildTickets = i'>
+											<option selected>
+						 				<csp:else>
+						 					<option>
+						 				</csp:if>
+							 			#(i)#
+							 			</option>
+						 			</csp:loop>
+						 		</select>
+						 	</div>
+		 				</div>
+			 		</div>
 			 	</csp:loop>
-			</ul>
+				<br>
+		 		<div class="input-group mb-2 mr-sm-2">
+			 		<div class="input-group-prepend">
+				      <div class="input-group-text">Valor total</div>
+				    </div>
 
-	 		<div class="input-group mb-2 mr-sm-2">
-		 		<div class="input-group-prepend">
-			      <div class="input-group-text">Valor total</div>
-			    </div>
-
-			 	<input
-			 		type="text"	
-			 		name="TotalCharge"
-			 		size=5 readonly
-			 		value=#($FN(ord.Total, "", 2))#
-			 		class="form-control">
-	 		</div>
-			<hr>
-			<input type="submit" name="CompleteOrder" value="Complete Order" class="btn btn-primary">
-			<a href=. onClick="#server(..OnEndSession())#" class="btn btn-danger">Limpar</a>
-
+				 	<input
+				 		type="text"	
+				 		name="TotalCharge"
+				 		size=5 readonly
+				 		value=#($FN(ord.Total, "", 2))#
+				 		class="form-control">
+		 		</div>
+				<hr>
+				
+		 		<label for="order-email">Digite seu e-mail para a confirmação do pedido.</label><br>
+				<input id="order-email" type="text" name="OrderEmail" class="form-control">
+				<br>
+				<input type="submit" name="CompleteOrder" value="Finalizar pedido" class="btn btn-primary">
+				<a href=. onClick="#server(..OnEndSession())#" class="btn btn-danger">Limpar</a>
 		 	</form>
 		</csp:if>
 	</div>
